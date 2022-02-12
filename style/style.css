@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #bac8d5;
+  background-color: #1e1e1e;
 }
 
 .main-game {
@@ -23,8 +23,8 @@ body {
     "green red"
     "yellow blue";
   gap: 1rem;
-  border: 1px solid white;
-  background-color: white;
+  border: 1px solid #1e1e1e;
+  background-color: #1e1e1e;
   border-radius: 50%;
   max-width: 700px;
   width: 100%;
@@ -35,6 +35,7 @@ body {
 .blue {
   grid-area: blue;
   background-color: blue;
+  border-bottom-right-radius: 50%;
 }
 
 .red {
@@ -53,5 +54,16 @@ body {
 }
 
 .selected {
-  opacity: 0.8;
+  opacity: 0.4;
+}
+
+.middle {
+  max-width: clamp(100px, 40vw, 400px);
+  width: 100%;
+  aspect-ratio: 1/1;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1e1e;
+  position: absolute;
+  border-radius: 50%;
 }
