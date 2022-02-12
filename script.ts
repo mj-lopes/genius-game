@@ -14,6 +14,11 @@ const blue = document.querySelector(".blue") as HTMLDivElement;
 const red = document.querySelector(".red") as HTMLDivElement;
 const yellow = document.querySelector(".yellow") as HTMLDivElement;
 const green = document.querySelector(".green") as HTMLDivElement;
+const score = document.querySelector(".score p") as HTMLParagraphElement;
+const gameOverWrapper = document.querySelector(
+  ".gameOverWrapper",
+) as HTMLDivElement;
+const gameOverMensage = document.querySelector(".gameOver p") as HTMLDivElement;
 
 const getRandomColor = (): void => {
   const randomColor = Math.floor(Math.random() * 4);
@@ -87,17 +92,20 @@ function playerClick(colorNum: number) {
 }
 
 function gameOver() {
-  alert(`Fim de jogo!\n Pontuação: ${game.score}`);
-  startGame();
+  gameOverWrapper.style.display = "flex";
+  gameOverWrapper.addEventListener("click", () => startGame());
+  gameOverMensage.innerText = `Fim de jogo!\n Pontuação: ${game.score}`;
 }
 
 function nextLevel() {
   game.score++;
-  alert(`Pontuação: ${game.score}\nVocê acertou! Iniciando próximo nível!`);
+  score.innerText = `Pontuação: ${game.score}`;
   getRandomColor();
 }
 
 function startGame() {
+  game.score = 0;
+  score.innerText = `Pontuação: ${game.score}`;
   game.order = [];
   game.clickedOrder = [];
   getRandomColor();
