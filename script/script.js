@@ -1,15 +1,16 @@
 "use strict";
-let order = [];
-let clickedOrder = [];
-let score = 0;
-let time = 0;
+const game = {
+    order: [],
+    clickedOrder: [],
+    score: 0,
+};
 const blue = document.querySelector(".blue");
 const red = document.querySelector(".red");
 const yellow = document.querySelector(".yellow");
 const green = document.querySelector(".green");
 const getRandomColor = () => {
     const randomColor = Math.floor(Math.random() * 4);
-    order.push(randomColor);
+    game.order.push(randomColor);
     startRound();
 };
 function selectColorEl(elementIndex) {
@@ -33,9 +34,9 @@ function selectColorEl(elementIndex) {
     return el;
 }
 function startRound() {
-    clickedOrder = [];
-    for (let index in order) {
-        let elementColor = selectColorEl(order[index]);
+    game.clickedOrder = [];
+    for (let index in game.order) {
+        let elementColor = selectColorEl(game.order[index]);
         lightColor(elementColor, Number.parseInt(index) + 1);
     }
 }
@@ -49,18 +50,18 @@ function lightColor(element, time) {
     }, time);
 }
 function checkOrder() {
-    for (let i in clickedOrder) {
-        if (clickedOrder[i] !== order[i]) {
+    for (let i in game.clickedOrder) {
+        if (game.clickedOrder[i] !== game.order[i]) {
             gameOver();
             break;
         }
     }
-    if (clickedOrder.length === order.length) {
+    if (game.clickedOrder.length === game.order.length) {
         nextLevel();
     }
 }
 function playerClick(colorNum) {
-    clickedOrder.push(colorNum);
+    game.clickedOrder.push(colorNum);
     const colorEl = selectColorEl(colorNum);
     colorEl.classList.add("selected");
     setTimeout(() => {
@@ -69,17 +70,17 @@ function playerClick(colorNum) {
     }, 250);
 }
 function gameOver() {
-    alert(`Fim de jogo!\n Pontuação: ${score}`);
+    alert(`Fim de jogo!\n Pontuação: ${game.score}`);
     startGame();
 }
 function nextLevel() {
-    score++;
-    alert(`Pontuação: ${score}\nVocê acertou! Iniciando próximo nível!`);
+    game.score++;
+    alert(`Pontuação: ${game.score}\nVocê acertou! Iniciando próximo nível!`);
     getRandomColor();
 }
 function startGame() {
-    order = [];
-    clickedOrder = [];
+    game.order = [];
+    game.clickedOrder = [];
     getRandomColor();
 }
 green.addEventListener("click", () => playerClick(0));
