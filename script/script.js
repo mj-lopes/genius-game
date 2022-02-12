@@ -3,6 +3,7 @@ const game = {
     order: [],
     clickedOrder: [],
     score: 0,
+    gameOver: false,
 };
 const blue = document.querySelector(".blue");
 const red = document.querySelector(".red");
@@ -12,9 +13,11 @@ const score = document.querySelector(".score p");
 const gameOverWrapper = document.querySelector(".gameOverWrapper");
 const gameOverMensage = document.querySelector(".gameOver p");
 const getRandomColor = () => {
-    const randomColor = Math.floor(Math.random() * 4);
-    game.order.push(randomColor);
-    startRound();
+    if (!game.gameOver) {
+        const randomColor = Math.floor(Math.random() * 4);
+        game.order.push(randomColor);
+        startRound();
+    }
 };
 function selectColorEl(elementIndex) {
     let el;
@@ -59,8 +62,10 @@ function checkOrder() {
             break;
         }
     }
-    if (game.clickedOrder.length === game.order.length) {
-        nextLevel();
+    if (!game.gameOver) {
+        if (game.clickedOrder.length === game.order.length) {
+            nextLevel();
+        }
     }
 }
 function playerClick(colorNum) {
@@ -73,6 +78,7 @@ function playerClick(colorNum) {
     }, 250);
 }
 function gameOver() {
+    game.gameOver = true;
     gameOverWrapper.style.display = "flex";
     gameOverWrapper.addEventListener("click", () => startGame());
     gameOverMensage.innerText = `Fim de jogo!\n Pontuação: ${game.score}`;
@@ -83,10 +89,12 @@ function nextLevel() {
     getRandomColor();
 }
 function startGame() {
-    game.score = 0;
-    score.innerText = `Pontuação: ${game.score}`;
     game.order = [];
+    game.score = 0;
     game.clickedOrder = [];
+    game.gameOver = false;
+    gameOverWrapper.style.display = "none";
+    score.innerText = `Pontuação: ${game.score}`;
     getRandomColor();
 }
 green.addEventListener("click", () => playerClick(0));
